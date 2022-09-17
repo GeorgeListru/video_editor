@@ -1,7 +1,7 @@
-import os
+from moviepy.audio.fx.volumex import volumex
 from moviepy.editor import *
 from resources import *
-from tkinter import filedialog as fd, messagebox
+from tkinter import messagebox
 import tkinter as tk
 
 video_path=""
@@ -9,15 +9,16 @@ audio_path=""
 
 
 def validate_volume(volume_entry, sv):
-    if sv.get().isdigit():
+    if sv.get().isdigit() and len(sv.get()) <= 3:
         if int(sv.get()) > 100:
-            sv.set("100")
+            sv.set('100')
+        elif int(sv.get()) < 0:
+            sv.set('0')
     else:
-        sv.set("")
+        sv.set('0')
 
 
 def replace_add_audio_window(window):
-    window.withdraw()
 
     def get_video_file():
         filename = select_video_file()
@@ -41,10 +42,10 @@ def replace_add_audio_window(window):
     add_audio_window.geometry('280x360')
     add_audio_window.resizable(False, False)
     add_audio_window.configure(background=DARK)
+    window.withdraw()
 
     add_video_button = get_button("add a video", get_video_file, add_audio_window)
     add_video_button.grid(row=0, column=0, padx=10, pady=(10, 5), sticky='we', columnspan=2)
-    add_audio_window.grid_columnconfigure(0, weight=1)
 
     video_name_label = get_label("No video selected", add_audio_window)
     video_name_label.grid(row=1, column=0, sticky='we', columnspan=2, pady=(0, 10))
@@ -55,17 +56,17 @@ def replace_add_audio_window(window):
     audio_name_label = get_label("No audio selected", add_audio_window)
     audio_name_label.grid(row=3, column=0, sticky='we', columnspan=2, pady=(0, 15))
 
-    begin_label = get_label("volume (1-100)", add_audio_window)
-    begin_label.grid(row=4, column=0, sticky="w", padx=10)
+    volume_label = get_label("volume (0 - 100)", add_audio_window)
+    volume_label.grid(row=4, column=0, sticky="w", padx=10, columnspan=2)
 
-    volume_value = tk.StringVar()
-    volume_entry = get_entry(add_audio_window, placeholder="100", var=volume_value)
-    volume_entry.grid(row=5, column=0, sticky="w", padx=13)
+    volume_value = tk.StringVar(add_audio_window, value='50')
+    volume_entry = tk.Entry(add_audio_window, textvariable=volume_value)
+    volume_entry.grid(row=5, column=0, sticky="we", padx=13, columnspan=2)
 
     volume_value.trace("w", lambda name, index, mode, sv=volume_value: validate_volume(volume_entry, sv))
 
-    empty_label = get_label("", add_audio_window)
-    empty_label.grid(row=5, column=1, sticky='w', pady=(0, 15))
+    add_audio_window.grid_columnconfigure(1, weight=1)
+    add_audio_window.grid_columnconfigure(0, weight=1)
 
     def replace_main_window():
         add_audio_window.destroy()
@@ -91,20 +92,20 @@ def replace_add_audio_window(window):
             return
 
         video = VideoFileClip(video_path)
-        audio = AudioFileClip(audio_path)
-        audio = audio.volumex(volume/100)
-        video = video.set_audio(audio)
-        video.write_videofile("output.mp4")
+        audio = AudioFileClip(audio_path).fx(volumex, volume/100)
+        new_audio = CompositeAudioClip([audio, video.audio])
+        video.audio = new_audio
+        video.subclip(0, video.duration).write_videofile(os.path.expanduser("~") + f"/videos/{video_path.split('/')[-1]}_new_audio.mp4")
         messagebox.showinfo("Success", "Audio added successfully")
 
 
         replace_main_window()
 
     back_button = get_button("back", replace_main_window, add_audio_window, height=1)
-    back_button.grid(row=6, column=0, sticky="we", padx=10, pady=(50, 0))
+    back_button.grid(row=6, column=0, padx=10, sticky="we", pady=(50,0))
 
     render_button = get_button("render", command=add_audio, window=add_audio_window, height=1)
-    render_button.grid(row=6, column=1, sticky="we", padx=10, pady=(50, 0))
+    render_button.grid(row=6, column=1, padx=10, sticky="we", pady=(50, 0))
 
 
     add_audio_window.mainloop()

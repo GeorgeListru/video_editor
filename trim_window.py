@@ -8,6 +8,18 @@ import tkinter as tk
 
 video_path=""
 
+def validate_time(begin_entry, sv):
+    value = sv.get()
+    print(value)
+    if len(value)>8:
+        begin_entry.delete(0, 'end')
+        begin_entry.insert(0, value[:-1])
+    if value:
+        if len(value) == 3:
+            begin_entry.insert(2, ":")
+        elif len(value) == 6:
+            begin_entry.insert(5, ":")
+
 def replace_trim_window (window):
 
     def get_video_file():
@@ -40,12 +52,12 @@ def replace_trim_window (window):
     end_label = get_label("end", trim_window)
     end_label.grid(row=2, column=1,sticky="e",padx=10)
 
-    begin_value = tk.StringVar()
-    begin_entry = get_entry(trim_window,placeholder="00:00:00", var=begin_value)
+    begin_value = tk.StringVar(trim_window)
+    begin_entry = get_placeholder_entry(trim_window, placeholder="00:00:00", var=begin_value)
     begin_entry.grid(row=3, column=0, sticky="w",padx=13)
 
-    end_value = tk.StringVar()
-    end_entry = get_entry(trim_window,placeholder="00:00:00", var=end_value)
+    end_value = tk.StringVar(trim_window)
+    end_entry = get_placeholder_entry(trim_window, placeholder="00:00:00", var=end_value)
     end_entry.grid(row=3, column=1, sticky="e",padx=13)
 
     begin_value.trace("w", lambda name, index, mode, sv=begin_value: validate_time(begin_entry, sv))

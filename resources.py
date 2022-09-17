@@ -48,17 +48,6 @@ def convert_to_seconds(time):
         seconds += int(time[i]) * (60**(len(time)-i-1))
     return seconds
 
-def validate_time(begin_entry, sv):
-    value = sv.get()
-    if len(value)>8:
-        begin_entry.delete(0, 'end')
-        begin_entry.insert(0, value[:-1])
-    if value:
-        if len(value) == 3:
-            begin_entry.insert(2, ":")
-        elif len(value) == 6:
-            begin_entry.insert(5, ":")
-
 def select_video_file():
     filetypes = (
         ('video files', '*.mp4'),
@@ -83,9 +72,11 @@ def select_audio_file():
     return filename
 
 def get_button(text: str, command, window, height=2):
-    return tk.Button(window, text=text, width=20, height=height, bg=LIGHT_GRAY, fg=BLACK, relief="ridge", command=command, font=('Arial', 10, "bold"))
+    return tk.Button(window, text=text, height=height, bg=LIGHT_GRAY, fg=BLACK, relief="ridge", command=command, font=('Arial', 10, "bold"))
 def get_label(text: str,window):
     return tk.Label(window, text=text, font=('Arial', 10, "bold"), fg=WHITE, bg=DARK)
-def get_entry(window, placeholder, var):
-    return EntryWithPlaceholder(window, placeholder=placeholder,textvariable=var, width=20, font=('Arial', 10, "bold"), fg=WHITE, bg=DARK_GRAY, relief="ridge", borderwidth=0)
+def get_placeholder_entry(window, placeholder, var):
+    return EntryWithPlaceholder(window, placeholder=placeholder,textvariable=var, font=('Arial', 10, "bold"), fg=WHITE, bg=DARK_GRAY, relief="ridge", borderwidth=0)
+def get_entry(window, var):
+    return tk.Entry(window, textvariable=var, font=('Arial', 10, "bold"), fg=WHITE, bg=DARK_GRAY, relief="ridge", borderwidth=0)
 

@@ -1,6 +1,6 @@
 import tkinter as tk
 from trim_window import replace_trim_window
-from add_audio import replace_add_audio_window
+from add_audio_window import replace_add_audio_window
 from resources import *
 
 def initialize_main_window():
