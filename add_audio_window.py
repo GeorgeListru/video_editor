@@ -60,7 +60,7 @@ def replace_add_audio_window(window):
     volume_label.grid(row=4, column=0, sticky="w", padx=10, columnspan=2)
 
     volume_value = tk.StringVar(add_audio_window, value='50')
-    volume_entry = tk.Entry(add_audio_window, textvariable=volume_value)
+    volume_entry = get_entry(add_audio_window, var=volume_value)
     volume_entry.grid(row=5, column=0, sticky="we", padx=13, columnspan=2)
 
     volume_value.trace("w", lambda name, index, mode, sv=volume_value: validate_volume(volume_entry, sv))

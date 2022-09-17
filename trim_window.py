@@ -65,7 +65,6 @@ def replace_trim_window (window):
 
     trim_window.grid_columnconfigure(1, weight=1)
 
-    ## create a back button to go back to main window
     def replace_main_window():
         trim_window.destroy()
         window.deiconify()
