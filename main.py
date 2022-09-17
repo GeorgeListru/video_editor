@@ -1,6 +1,7 @@
 import tkinter as tk
 from trim_window import replace_trim_window
 from add_audio_window import replace_add_audio_window
+from speed_window import replace_speed_window
 from resources import *
 
 def initialize_main_window():
@@ -27,7 +28,7 @@ def initialize_main_window():
     add_sound_text = get_icon_label('ADD SOUND').grid(row=1, column=1)
 
     speed_icon = get_icon('icons/speed.png')
-    speed_button = get_icon_button(speed_icon, lambda: print('speed')).grid(row=0, column=2, padx=25, pady=(20,0))
+    speed_button = get_icon_button(speed_icon, lambda: replace_speed_window(window)).grid(row=0, column=2, padx=25, pady=(20,0))
     speed_text = get_icon_label('SPEED').grid(row=1, column=2)
 
     volume = get_icon('icons/volume.png')
