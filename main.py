@@ -3,6 +3,7 @@ from trim_window import replace_trim_window
 from add_audio_window import replace_add_audio_window
 from speed_window import replace_speed_window
 from volume_window import replace_volume_window
+from resize_window import replace_resize_window
 from resources import *
 
 def initialize_main_window():
@@ -37,7 +38,7 @@ def initialize_main_window():
     volume_text = get_icon_label('VOLUME').grid(row=1, column=3)
 
     resize = get_icon('icons/resize.png')
-    resize_button = get_icon_button(resize, lambda: print('resize')).grid(row=0, column=4, padx=25, pady=(20,0))
+    resize_button = get_icon_button(resize, lambda: replace_resize_window(window)).grid(row=0, column=4, padx=25, pady=(20,0))
     resize_text = get_icon_label('RESIZE').grid(row=1, column=4)
 
     window.mainloop()

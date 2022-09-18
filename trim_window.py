@@ -43,7 +43,6 @@ def replace_trim_window (window):
     add_video_button.grid(row=0, column=0, padx=10, pady=(10,5), sticky='we',columnspan=2)
     trim_window.grid_columnconfigure(0, weight=1)
 
-
     video_name_label = get_label("No video selected", trim_window)
     video_name_label.grid(row=1, column=0, sticky='we',columnspan=2, pady=(0,25))
 
