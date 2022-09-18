@@ -29,7 +29,7 @@ def replace_speed_window(window):
 
     speed_window = tk.Tk()
     speed_window.title('Add Audio')
-    speed_window.geometry('280x360')
+    speed_window.geometry('280x240')
     speed_window.resizable(False, False)
     speed_window.configure(background=DARK)
     window.withdraw()

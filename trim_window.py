@@ -35,7 +35,7 @@ def replace_trim_window (window):
 
     trim_window = tk.Tk()
     trim_window.title('Trim Video')
-    trim_window.geometry('280x260')
+    trim_window.geometry('280x240')
     trim_window.resizable(False, False)
     trim_window.configure(background=DARK)
 

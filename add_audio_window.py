@@ -7,17 +7,6 @@ import tkinter as tk
 video_path=""
 audio_path=""
 
-
-def validate_volume(volume_entry, sv):
-    if sv.get().isdigit() and len(sv.get()) <= 3:
-        if int(sv.get()) > 100:
-            sv.set('100')
-        elif int(sv.get()) < 0:
-            sv.set('0')
-    else:
-        sv.set('0')
-
-
 def replace_add_audio_window(window):
 
     def get_video_file():
@@ -39,7 +28,7 @@ def replace_add_audio_window(window):
 
     add_audio_window = tk.Tk()
     add_audio_window.title('Add Audio')
-    add_audio_window.geometry('280x360')
+    add_audio_window.geometry('280x340')
     add_audio_window.resizable(False, False)
     add_audio_window.configure(background=DARK)
     window.withdraw()
@@ -97,7 +86,6 @@ def replace_add_audio_window(window):
         video.audio = new_audio
         video.subclip(0, video.duration).write_videofile(os.path.expanduser("~") + f"/videos/{video_path.split('/')[-1]}_new_audio.mp4")
         messagebox.showinfo("Success", "Audio added successfully")
-
 
         replace_main_window()
 

@@ -71,6 +71,15 @@ def select_audio_file():
     )
     return filename
 
+def validate_volume(volume_entry, sv):
+    if sv.get().isdigit() and len(sv.get()) <= 3:
+        if int(sv.get()) > 100:
+            sv.set('100')
+        elif int(sv.get()) < 0:
+            sv.set('0')
+    else:
+        sv.set('0')
+
 def get_button(text: str, command, window, height=2):
     return tk.Button(window, text=text, height=height, bg=LIGHT_GRAY, fg=BLACK, relief="ridge", command=command, font=('Arial', 10, "bold"))
 def get_label(text: str,window):
